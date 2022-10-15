@@ -21,7 +21,7 @@ public class Enemy : Entity
     private float size;
     private float attackCooldown = 1f, currentCooldown = 0;
     private bool touching = false;
-   
+   // test
     
 
     public Item[] getLoot() { return loot; }
