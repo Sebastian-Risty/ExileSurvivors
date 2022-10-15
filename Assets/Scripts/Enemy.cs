@@ -39,10 +39,16 @@ public class Enemy : Entity
     public bool isTouching() { return touching; }
     public void setTouching(bool touching) { this.touching = touching; }
 
-    public Enemy() {
-        int quadrant = 0;
-        float xShift = 0f;
-        float yShift = 0f;
+    private void Awake() {
+        gameObject.tag = "enemy";
+        target = GameObject.Find("Player");
+        setSpeed(3);
+        setHp(30);
+        setDamage(5);
+
+        int quadrant = Random.Range(0,3);
+        float xShift = Random.Range(-200, 200); // get new pos from player + offset
+        float yShift = Random.Range(-200, 200);
         switch (quadrant) {
             case 0: // top
                 transform.position = new Vector2(target.transform.position[0] + xShift, target.transform.position[1] + Mathf.Abs(yShift));
@@ -62,11 +68,6 @@ public class Enemy : Entity
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.tag = "enemy";
-        target = GameObject.Find("Player");
-        setSpeed(3);
-        setHp(30);
-        setDamage(5);
     }
 
     // Update is called once per frame
