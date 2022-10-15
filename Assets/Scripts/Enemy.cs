@@ -40,9 +40,9 @@ public class Enemy : Entity
     public void setTouching(bool touching) { this.touching = touching; }
 
     public Enemy() {
-        int quadrant = Random.Range(0, 3);
-        float xShift = Random.Range(-200, 200);
-        float yShift = Random.Range(-200, 200);
+        int quadrant = 0;
+        float xShift = 0f;
+        float yShift = 0f;
         switch (quadrant) {
             case 0: // top
                 transform.position = new Vector2(target.transform.position[0] + xShift, target.transform.position[1] + Mathf.Abs(yShift));
