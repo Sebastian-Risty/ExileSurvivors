@@ -26,6 +26,7 @@ public abstract class Entity : MonoBehaviour
     private float receivedDamage;
 
 
+
     public float getHp() { return hp; }
     public float getSpeed() { return speed; }
     public void setHp(float hp) { 

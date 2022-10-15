@@ -47,9 +47,8 @@ public class SceneBuilder : MonoBehaviour
                 //do something
                 break;
             case Scene.Battle:
-                numSeconds += Time.dealtaTime;
-                for (i <)
-                    break;
+                numSeconds += Time.deltaTime;
+                break;
             //case Scene.Main:
             default:
                 //if button flag
