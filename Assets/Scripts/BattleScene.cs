@@ -1,6 +1,5 @@
 //***********************************************************************
 //COPYRIGHT Sebastian Ritsy, Bradley Johnson, Matthew Dutton
-// https://www.freepik.com/free-vector/abstract-organic-lines-background_9406224.htm#query=game%20pattern&position=7&from_view=keyword Image by starline on Freepik
 //***********************************************************************
 
 using System.Collections;
@@ -10,34 +9,25 @@ using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
 
-public class SceneBuilder : MonoBehaviour
+public class BattleScene : MonoBehaviour
 {
     //list of enemies in world
     private List<Enemy> enemyList;
-
-    public GameObject basicEnemyFab;
-
-    private bool sceneChanged;
-    private SceneSelect currentScene;
+    public GameObject basicEnemyFab; // store enemy fabs as list?
 
     private GameObject target;
 
-    public int waveCalledLast; //Last second interval that a wave was spawned
+    private int waveCalledLast; //Last second interval that a wave was spawned
     private float numSeconds; //num seconds in level
     private uint waveSpawnInterval; //A wave will spawn every these number of seconds
     private uint numToSpawn; //determines how many enemies will be spawned
-    enum SceneSelect
-    {
-        Main, //Title
-        Stash, //Camp
-        Battle //Battle
-    }
+
+    private bool pause;
 
     // Start is called before the first frame update
     void Start()
     {
         target = GameObject.Find("Player");
-        currentScene = SceneSelect.Main;
         enemyList = new List<Enemy>();
         numSeconds = 0;
         waveCalledLast = 2; //set to non zero to prevent massove first wave
@@ -50,33 +40,16 @@ public class SceneBuilder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // set up all the scenes
-        switch (currentScene)
+        if (!pause)
         {
-            case SceneSelect.Stash:
-                //do something
-                break;
-            case SceneSelect.Battle:
-                numSeconds += Time.deltaTime;
-                //Every
-                if ((((int)numSeconds%waveSpawnInterval == 0) || ((int)numSeconds == 0)) && (waveCalledLast != (int)numSeconds))
-                {
-                    Debug.Log("Spawned!");
-                    spawnEnemy(numToSpawn);
-                    waveCalledLast = (int)numSeconds;
-                }
-                break;
-            //case Scene.Main:
-            default:
-                //if button flag
-                //scene = Scene.Battle
-                break;
-
-        }
-        if (sceneChanged == true)
-        {
-            enemyList.Clear();
-            numSeconds = 0;
+            numSeconds += Time.deltaTime;
+            //Every
+            if ((((int)numSeconds % waveSpawnInterval == 0) || ((int)numSeconds == 0)) && (waveCalledLast != (int)numSeconds))
+            {
+                Debug.Log("Spawned!");
+                spawnEnemy(numToSpawn);
+                waveCalledLast = (int)numSeconds;
+            }
         }
     }
 
