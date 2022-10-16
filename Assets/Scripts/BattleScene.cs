@@ -22,7 +22,7 @@ public class BattleScene : MonoBehaviour
     private uint waveSpawnInterval; //A wave will spawn every these number of seconds
     private uint numToSpawn; //determines how many enemies will be spawned
 
-    private bool pause;
+    public static bool pause = false;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +40,12 @@ public class BattleScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp(KeyCode.Tab))
+        {
+            pause = !pause;
+            pauseGame();
+        }
+
         if (!pause)
         {
             numSeconds += Time.deltaTime;
@@ -53,8 +59,7 @@ public class BattleScene : MonoBehaviour
         }
     }
 
-    void spawnEnemy(uint numEnemy)
-    {
+    void spawnEnemy(uint numEnemy){
             float maxShift = 20f, xShift, yShift;
             int quadrant;
             for (uint i = 0; i < numEnemy; i++) {
@@ -81,8 +86,17 @@ public class BattleScene : MonoBehaviour
                 Debug.Log("Spawned!");
                 Instantiate(basicEnemyFab, spawnPos, Quaternion.identity);
             }
-        }
-     
- }
+    }
 
-    
+    void pauseGame()
+    {
+        if (pause)
+        {
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+    }
+ }

@@ -40,12 +40,16 @@ public class Player : Entity
     // Update is called once per frame
     void Update()
     {
-        Move();
-        Camera.main.transform.position = transform.position + new Vector3(0, 1, -5); // make camera follow player
-        Immunity();
-        TakeDamage();
-        if (Input.GetButtonDown("Fire1")) {
-            Attack();
+        if (!BattleScene.pause)
+        {
+            Move();
+            Camera.main.transform.position = transform.position + new Vector3(0, 1, -5); // make camera follow player
+            Immunity();
+            TakeDamage();
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Attack();
+            }
         }
     }
 
