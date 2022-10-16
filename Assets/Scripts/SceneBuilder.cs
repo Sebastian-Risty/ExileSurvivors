@@ -18,9 +18,11 @@ public class SceneBuilder : MonoBehaviour
     public GameObject basicEnemyFab;
 
     private bool sceneChanged;
-    private Scene currentScene;
+    private SceneSelect currentScene;
 
-    enum Scene
+    bool waveCalled = false; // use lastWave int to control
+
+    enum SceneSelect
     {
         Main, //Title
         Stash, //Camp
@@ -30,11 +32,9 @@ public class SceneBuilder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentScene = Scene.Battle;
-        Debug.Log("Scene: " + currentScene);
+        currentScene = SceneSelect.Battle;
         enemyList = new List<Enemy>();
         numSeconds = 0;
-
         // show main menu
 
     }
@@ -42,16 +42,15 @@ public class SceneBuilder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Scene: " + currentScene);
         // set up all the scenes
         switch (currentScene)
         {
-            case Scene.Stash:
+            case SceneSelect.Stash:
                 //do something
                 break;
-            case Scene.Battle:
+            case SceneSelect.Battle:
                 numSeconds += Time.deltaTime;
-                if (numSeconds == 1) {
+                if ((int)numSeconds == 1) {
                     Debug.Log("Spawned!");
                     spawnEnemy(3);
                 }
@@ -70,12 +69,14 @@ public class SceneBuilder : MonoBehaviour
         }
     }
 
-    void spawnEnemy(uint numEnemy = 0)
+    void spawnEnemy(uint numEnemy)
     {
-        for (uint i = 0; i < numEnemy; i++)
-        {
-            Instantiate(basicEnemyFab, new Vector3(0,0,0), Quaternion.identity);
+        if (!waveCalled) {
+            for (uint i = 0; i < numEnemy; i++) {
+                Debug.Log("Spawned!");
+                Instantiate(basicEnemyFab, new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), 0), Quaternion.identity);
+            }
         }
-
+        waveCalled = true;
     }
 }

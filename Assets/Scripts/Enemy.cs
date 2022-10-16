@@ -46,7 +46,9 @@ public class Enemy : Entity
         setHp(30);
         setDamage(5);
 
-        int quadrant = Random.Range(0,3);
+        /*
+         * 
+         * int quadrant = Random.Range(0,3);
         float xShift = Random.Range(-200, 200); // get new pos from player + offset
         float yShift = Random.Range(-200, 200);
         switch (quadrant) {
@@ -62,7 +64,7 @@ public class Enemy : Entity
             case 3: // right
                 transform.position = new Vector2(target.transform.position[0] + Mathf.Abs(xShift), target.transform.position[1] + yShift);
                 break;
-        }
+        }*/
     }
     
     // Start is called before the first frame update
