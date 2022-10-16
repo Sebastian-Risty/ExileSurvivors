@@ -15,7 +15,7 @@ public class SceneBuilder : MonoBehaviour
     //num seconds in level
     float numSeconds;
 
-
+    GameObject prefab;
 
     enum Scene
     {
@@ -29,7 +29,7 @@ public class SceneBuilder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        scene = Scene.Main;
+        scene = Scene.Battle;
         enemyList = new List<Enemy>();
         numSeconds = 0;
 
@@ -48,6 +48,9 @@ public class SceneBuilder : MonoBehaviour
                 break;
             case Scene.Battle:
                 numSeconds += Time.deltaTime;
+                if (numSeconds == 3) {
+                    spawnEnemy(3);
+                }
                 break;
             //case Scene.Main:
             default:
@@ -67,7 +70,7 @@ public class SceneBuilder : MonoBehaviour
     {
         for (uint i = 0; i < numEnemy; i++)
         {
-
+            
         }
 
     }
