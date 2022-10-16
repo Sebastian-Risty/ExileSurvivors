@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 
 public class SceneBuilder : MonoBehaviour
@@ -20,6 +21,8 @@ public class SceneBuilder : MonoBehaviour
     private bool sceneChanged;
     private SceneSelect currentScene;
 
+    private GameObject target;
+
     bool waveCalled = false; // use lastWave int to control
 
     enum SceneSelect
@@ -32,6 +35,7 @@ public class SceneBuilder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        target = GameObject.Find("Player");
         currentScene = SceneSelect.Battle;
         enemyList = new List<Enemy>();
         numSeconds = 0;
@@ -52,7 +56,7 @@ public class SceneBuilder : MonoBehaviour
                 numSeconds += Time.deltaTime;
                 if ((int)numSeconds == 1) {
                     Debug.Log("Spawned!");
-                    spawnEnemy(3);
+                    spawnEnemy(15);
                 }
                 break;
             //case Scene.Main:
@@ -72,9 +76,31 @@ public class SceneBuilder : MonoBehaviour
     void spawnEnemy(uint numEnemy)
     {
         if (!waveCalled) {
+            float maxShift = 20f, xShift, yShift;
+            int quadrant;
             for (uint i = 0; i < numEnemy; i++) {
+                quadrant = Random.Range(0, 3);
+                xShift = Random.Range(-maxShift, maxShift); // get new pos from player + offset
+                yShift = Random.Range(-maxShift, maxShift);
+
+                Vector3 spawnPos = new Vector3();
+
+                switch (quadrant) {
+                    case 0: // top
+                        spawnPos = new Vector3(target.transform.position[0] + xShift, target.transform.position[1] + maxShift, 0);
+                        break;
+                    case 1: // left
+                        spawnPos = new Vector3(target.transform.position[0] - maxShift, target.transform.position[1] + yShift, 0);
+                        break;
+                    case 2: // bottom
+                        spawnPos = new Vector3(target.transform.position[0] + xShift, target.transform.position[1] - maxShift, 0);
+                        break;
+                    case 3: // right
+                        spawnPos = new Vector3(target.transform.position[0] + maxShift, target.transform.position[1] + yShift, 0);
+                        break;
+                }
                 Debug.Log("Spawned!");
-                Instantiate(basicEnemyFab, new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), 0), Quaternion.identity);
+                Instantiate(basicEnemyFab, spawnPos, Quaternion.identity);
             }
         }
         waveCalled = true;
