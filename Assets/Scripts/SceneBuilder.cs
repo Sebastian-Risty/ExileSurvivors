@@ -1,5 +1,6 @@
 //***********************************************************************
 //COPYRIGHT Sebastian Ritsy, Bradley Johnson, Matthew Dutton
+// https://www.freepik.com/free-vector/abstract-organic-lines-background_9406224.htm#query=game%20pattern&position=7&from_view=keyword Image by starline on Freepik
 //***********************************************************************
 
 using System.Collections;
@@ -36,7 +37,7 @@ public class SceneBuilder : MonoBehaviour
     void Start()
     {
         target = GameObject.Find("Player");
-        currentScene = SceneSelect.Battle;
+        currentScene = SceneSelect.Main;
         enemyList = new List<Enemy>();
         numSeconds = 0;
         waveCalledLast = 2; //set to non zero to prevent massove first wave
