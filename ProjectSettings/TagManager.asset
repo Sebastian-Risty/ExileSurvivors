@@ -43,3 +43,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Player
+    uniqueID: 2921721733
+    locked: 0
+  - name: Enemy
+    uniqueID: 2441492695
+    locked: 0
+  - name: Level_Object
+    uniqueID: 1247199687
+    locked: 0
