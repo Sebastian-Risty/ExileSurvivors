@@ -10,12 +10,15 @@ using UnityEngine;
 public class SceneBuilder : MonoBehaviour
 {
     //list of enemies in world
-    List<Enemy> enemyList;
+    private List<Enemy> enemyList;
 
     //num seconds in level
-    float numSeconds;
+    private float numSeconds;
 
-    GameObject prefab;
+    public GameObject basicEnemyFab;
+
+    private bool sceneChanged;
+    private Scene currentScene;
 
     enum Scene
     {
@@ -24,12 +27,11 @@ public class SceneBuilder : MonoBehaviour
         Battle //Battle
     }
 
-    bool sceneChanged;
-    Scene scene;
     // Start is called before the first frame update
     void Start()
     {
-        scene = Scene.Battle;
+        currentScene = Scene.Battle;
+        Debug.Log("Scene: " + currentScene);
         enemyList = new List<Enemy>();
         numSeconds = 0;
 
@@ -41,14 +43,15 @@ public class SceneBuilder : MonoBehaviour
     void Update()
     {
         // set up all the scenes
-        switch (scene)
+        switch (currentScene)
         {
             case Scene.Stash:
                 //do something
                 break;
             case Scene.Battle:
                 numSeconds += Time.deltaTime;
-                if (numSeconds == 3) {
+                if (numSeconds == 1) {
+                    Debug.Log("Spawned!");
                     spawnEnemy(3);
                 }
                 break;
@@ -70,7 +73,7 @@ public class SceneBuilder : MonoBehaviour
     {
         for (uint i = 0; i < numEnemy; i++)
         {
-            
+            Instantiate(basicEnemyFab, new Vector3(0,0,0), Quaternion.identity);
         }
 
     }

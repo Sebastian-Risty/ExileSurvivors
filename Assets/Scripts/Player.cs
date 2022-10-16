@@ -76,7 +76,7 @@ public class Player : Entity
                     setReceivedDamage(getReceivedDamage() + enemy.getDamage()); // add to applied damag
                     enemy.setCurrentCooldown(enemy.getAttackCooldown());
                     
-                    Debug.Log("Damage to apply: " + getReceivedDamage());
+                    
                 }
             }
             setHp(getHp() - getReceivedDamage()); // apply the damage
