@@ -7,32 +7,30 @@ using UnityEngine.UI;
 
 public class ButtonHandler : MonoBehaviour
 {
-    /*
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    private Button currentButton;
+    public buttonFunction function;
+
+    public enum buttonFunction{
+        start,
+        test
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-     
-    }
-    */
-    //Take to Battle 
-    public Button startButton;
-
-    private void Start()
-    {
-        Button btn = startButton.GetComponent<Button>();
-        btn.onClick.AddListener(TaskOnClick);
-
+        currentButton = gameObject.GetComponent<Button>();
+        currentButton.onClick.AddListener(() => ButtonClicked(function));
     }
 
-    void TaskOnClick()
+    void ButtonClicked(buttonFunction function)
     {
-        SceneManager.LoadScene("Battle");
-        Debug.Log("button clicked!");
+        switch (function)
+        {
+            case buttonFunction.start:
+                SceneManager.LoadScene("Battle");
+                break;
+            case buttonFunction.test:
+                Debug.Log("Hit!");
+                break;
+        }
     }
 }
