@@ -42,6 +42,7 @@ public class SceneBuilder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Scene: " + currentScene);
         // set up all the scenes
         switch (currentScene)
         {
