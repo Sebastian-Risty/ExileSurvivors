@@ -4,6 +4,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -13,9 +14,6 @@ public class SceneBuilder : MonoBehaviour
     //list of enemies in world
     private List<Enemy> enemyList;
 
-    //num seconds in level
-    private float numSeconds;
-
     public GameObject basicEnemyFab;
 
     private bool sceneChanged;
@@ -23,8 +21,10 @@ public class SceneBuilder : MonoBehaviour
 
     private GameObject target;
 
-    bool waveCalled = false; // use lastWave int to control
-
+    public int waveCalledLast; //Last second interval that a wave was spawned
+    private float numSeconds; //num seconds in level
+    private uint waveSpawnInterval; //A wave will spawn every these number of seconds
+    private uint numToSpawn; //determines how many enemies will be spawned
     enum SceneSelect
     {
         Main, //Title
@@ -39,6 +39,9 @@ public class SceneBuilder : MonoBehaviour
         currentScene = SceneSelect.Battle;
         enemyList = new List<Enemy>();
         numSeconds = 0;
+        waveCalledLast = 2; //set to non zero to prevent massove first wave
+        waveSpawnInterval = 5;
+        numToSpawn = 15;
         // show main menu
 
     }
@@ -54,9 +57,12 @@ public class SceneBuilder : MonoBehaviour
                 break;
             case SceneSelect.Battle:
                 numSeconds += Time.deltaTime;
-                if ((int)numSeconds == 1) {
+                //Every
+                if ((((int)numSeconds%waveSpawnInterval == 0) || ((int)numSeconds == 0)) && (waveCalledLast != (int)numSeconds))
+                {
                     Debug.Log("Spawned!");
-                    spawnEnemy(15);
+                    spawnEnemy(numToSpawn);
+                    waveCalledLast = (int)numSeconds;
                 }
                 break;
             //case Scene.Main:
@@ -75,7 +81,6 @@ public class SceneBuilder : MonoBehaviour
 
     void spawnEnemy(uint numEnemy)
     {
-        if (!waveCalled) {
             float maxShift = 20f, xShift, yShift;
             int quadrant;
             for (uint i = 0; i < numEnemy; i++) {
@@ -103,6 +108,7 @@ public class SceneBuilder : MonoBehaviour
                 Instantiate(basicEnemyFab, spawnPos, Quaternion.identity);
             }
         }
-        waveCalled = true;
-    }
-}
+     
+ }
+
+    

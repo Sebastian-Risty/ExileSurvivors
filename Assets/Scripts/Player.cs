@@ -13,7 +13,8 @@ public class Player : Entity
     private bool isImmune = false;
     private float immunityTime = 1f, timer = 0f;
     private List<Enemy> enemiesWithin = new List<Enemy> ();
-    
+
+    private int scalarCorrection;
 
     public Item[] getInventory() { return inventory; }
     public void setInventory(Item[] inventory) { this.inventory = inventory; }
@@ -45,6 +46,7 @@ public class Player : Entity
     override
     public void Move() {
         getRB().velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        getRB().velocity.Normalize();
         transform.Translate(getRB().velocity * Time.deltaTime * getSpeed());
     }
       
