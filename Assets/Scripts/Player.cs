@@ -4,6 +4,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : Entity
@@ -22,7 +23,7 @@ public class Player : Entity
     public float getImmunityTime() { return immunityTime; }
     public void setImmunityTime(float immunityTime) { this.immunityTime = immunityTime; }
     public List<Enemy> getEnemiesWithin() { return enemiesWithin; }
-    
+    public GameObject weapon;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,7 @@ public class Player : Entity
         setDamage(30);
         gameObject.tag = "player";
         setRB(GetComponent<Rigidbody2D>());
+        
     }
 
     // Update is called once per frame
@@ -40,6 +42,9 @@ public class Player : Entity
         Move();
         Immunity();
         TakeDamage();
+        if (Input.GetButtonDown("Fire1")) {
+            Attack();
+        }
     }
 
     override
@@ -49,8 +54,8 @@ public class Player : Entity
     }
       
     override
-    public void Attack() {
-        
+    public void Attack() {      // need to get item class at runtime
+        transform.GetChild(0).GetComponent<Gun>().AttackBehavior();
     }
 
  /**********************************************************************
