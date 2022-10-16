@@ -57,7 +57,9 @@ public class Enemy : Entity
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(target.transform.position.ToString());
+        if(getHp() <= 0) {
+            Destroy(gameObject);
+        }
         
         if (!touching)
         {

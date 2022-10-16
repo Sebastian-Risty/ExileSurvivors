@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
 public class Gun : Item
 {
-    private float speed = 4f; // put common stuff into item class
+    private float speed = 15f; // put common stuff into item class
     private float size = 1f;
     private float damage = 5f;
     private int numShots = 1;
-    private float lifetime = 5f; // how long bullet will exist 
+    private float lifetime = 2f; // how long bullet will exist 
 
-    private GameObject bulletFab;
+    public float getSpeed() { return speed; }
+    public float getLifetime() { return lifetime; }
+
+    public GameObject bulletFab;
     private List<Projectile> bullets = new List<Projectile>();
 
     // Start is called before the first frame update
@@ -28,9 +32,9 @@ public class Gun : Item
 
     override
     public void AttackBehavior() {
-        Projectile currentBullet = Instantiate(bulletFab, transform.parent.position, Quaternion.identity).GetComponent<Projectile>();
-        currentBullet.setSpeed(speed);
-        bullets.Add(currentBullet.GetComponent<Projectile>()); // DELETE OBJECT AFTER SOME TIME
-        // add trigger event below
+        Instantiate(bulletFab, transform.parent.position, Quaternion.identity);
+        bullets.Add(bulletFab.GetComponent<Projectile>()); // DELETE OBJECT AFTER SOME TIME
     }
 }
+
+//Instantiate(bulletPrefab, GUNTRANSFORM, GUNTRANSFORM.rotation, transform);
