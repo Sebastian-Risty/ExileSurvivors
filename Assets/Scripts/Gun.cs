@@ -14,7 +14,10 @@ public class Gun : Weapon
     private float speed = 15f; // put common stuff into item class
     private float size = 1f;
     private float damage = 10f;
-    private int numShots = 1;
+
+    private int numShots = 5; // number of attacks to fire (cannot be even)
+    private float spreadAngle = 5f; // angle between each attack
+
     private float lifetime = 2f; // how long bullet will exist
     private float fireCooldown = 0.1f; // time between shots
     private float currentFireCooldown;
@@ -61,29 +64,49 @@ public class Gun : Weapon
     public void AttackBehavior() {
         if (currentFireCooldown == 0)
         {
+            float fireAngle = getAttackAngle();
+
             // create new bullet
             GameObject newBullet = Instantiate(bulletFab, transform.parent.position, Quaternion.identity);
-
             // give a tag
             newBullet.tag = "playerAttack";
-
-
             // add damage variable
             newBullet.GetComponent<PlayerAttack>().setDamage(damage);
-
-            // set the new bullets angle of travel
-            newBullet.transform.Rotate(new Vector3(0, 0, getAttackAngle()));
-
+            // fire center
+            newBullet.transform.Rotate(new Vector3(0, 0, fireAngle));
             // add bullet to list to update their info
             bullets.Add(newBullet);
-     
             // destroy the bullet after a certain period
             Destroy(newBullet, lifetime);
 
+            if (numShots > 1)
+            {
+                for (int i = 1; i < ((numShots - 1) / 2) + 1; i++)
+                {
+                    // create left and right bullets
+                    GameObject newLeftBullet = Instantiate(bulletFab, transform.parent.position, Quaternion.identity);
+                    GameObject newRightBullet = Instantiate(bulletFab, transform.parent.position, Quaternion.identity);
+
+                    newLeftBullet.tag = "playerAttack";
+                    newRightBullet.tag = "playerAttack";
+
+                    newLeftBullet.GetComponent<PlayerAttack>().setDamage(damage);
+                    newRightBullet.GetComponent<PlayerAttack>().setDamage(damage);
+
+                    newLeftBullet.transform.Rotate(new Vector3(0, 0, fireAngle - (spreadAngle * i)));
+                    newRightBullet.transform.Rotate(new Vector3(0, 0, fireAngle + (spreadAngle * i)));
+
+                    bullets.Add(newLeftBullet);
+                    bullets.Add(newRightBullet);
+
+                    Destroy(newLeftBullet, lifetime);
+                    Destroy(newRightBullet, lifetime);
+                }
+
+            }
+
             // reset attack cooldown
             currentFireCooldown = fireCooldown;
-
-            
         }
     }
 }
