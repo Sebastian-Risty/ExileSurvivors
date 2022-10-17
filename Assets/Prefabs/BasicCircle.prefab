@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -1699726810545923332}
   - component: {fileID: -3427457549354754611}
   - component: {fileID: 8557523681559685570}
+  - component: {fileID: 6305756817853643955}
   - component: {fileID: 8588463044903921521}
   m_Layer: 0
   m_Name: BasicCircle
@@ -119,6 +120,22 @@ CircleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+--- !u!58 &6305756817853643955
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6217933234813567305}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

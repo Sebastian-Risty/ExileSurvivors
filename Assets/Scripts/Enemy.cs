@@ -106,7 +106,17 @@ public class Enemy : Entity
 
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("playerAttack"))
+        {
+            var source = collision.gameObject;
 
+            // deduct enemy hp by the damage sources damage
+            setHp(getHp() - source.GetComponent<PlayerAttack>().getDamage());
+
+            // destory the source
+            Destroy(source); // TODO: handle pen (sniper/sword swing) 
+        }
+    }
 }
-
-    
