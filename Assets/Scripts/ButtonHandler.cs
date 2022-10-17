@@ -3,6 +3,7 @@
 //***********************************************************************
 
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -21,6 +22,11 @@ public class ButtonHandler : MonoBehaviour
     {
         currentButton = gameObject.GetComponent<Button>();
         currentButton.onClick.AddListener(() => ButtonClicked(function));
+
+        // set buttons nav mode to none to prevent weird selection highlights without needing to change every button
+        Navigation navigation = new Navigation();
+        navigation.mode = Navigation.Mode.None;
+        currentButton.navigation = navigation;
     }
 
     void ButtonClicked(buttonFunction function)
@@ -29,6 +35,7 @@ public class ButtonHandler : MonoBehaviour
         {
             case buttonFunction.startBattle:
                 SceneManager.LoadScene("Battle");
+                EventSystem.current.SetSelectedGameObject(null);
                 break;
             case buttonFunction.returnToMain:
                 SceneManager.LoadScene("Main Menu");

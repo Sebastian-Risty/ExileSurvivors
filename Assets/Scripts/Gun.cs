@@ -14,7 +14,7 @@ public class Gun : Item
     private float size = 1f;
     private float damage = 5f;
     private int numShots = 1;
-    private float lifetime = 2f; // how long bullet will exist 
+    private float lifetime = 20f; // how long bullet will exist 
 
     public float getSpeed() { return speed; }
     public float getLifetime() { return lifetime; }
@@ -37,7 +37,7 @@ public class Gun : Item
     override
     public void AttackBehavior() {
         Instantiate(bulletFab, transform.parent.position, Quaternion.identity);
-        bullets.Add(bulletFab.GetComponent<Projectile>()); // DELETE OBJECT AFTER SOME TIME
+        bullets.Add(bulletFab.GetComponent<Projectile>());
     }
 }
 

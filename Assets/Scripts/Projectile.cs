@@ -15,33 +15,28 @@ public class Projectile : MonoBehaviour
     private float angle;
     
     private Vector3 mousePos = new Vector3();
-    private Vector3 position = new Vector3();
+    private Vector3 firePos = new Vector3();
+
     private void Awake() {
         gun = GameObject.Find("Gun");
         speed = gun.GetComponent<Gun>().getSpeed();
         lifetime = gun.GetComponent<Gun>().getLifetime();
-        mousePos = Input.mousePosition;
-        position = new Vector3(Screen.width / 2, Screen.height / 2, 0); // TODO update in case of resize
-        angle = Vector2.Angle(position, mousePos);
-        Destroy(gameObject, lifetime);
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        firePos = transform.position;
+        //Debug.Log("Mouse: " + mousePos.ToString());
+        //Debug.Log("Fire Pos: " + firePos);
+
+        angle = (float)((180 / System.Math.PI) * System.Math.Atan2(mousePos.y - firePos.y, mousePos.x - firePos.x));
+        transform.Rotate(new Vector3(0, 0, angle));
+        //Debug.Log("Angle: " + angle);
+
+        Destroy(gameObject, lifetime);
     }
 
     // Update is called once per frame
     void Update() {
-        Vector3 diff = mousePos - position;
-        transform.position = Vector3.MoveTowards(transform.position, (transform.position + diff).normalized * 9999, speed * Time.deltaTime);
-        Debug.Log(angle);
-        Debug.Log("Pos: " + position.ToString() + " Mouse: " + mousePos.ToString());
-
-        //var step = speed * Time.deltaTime; // calculate distance to move
-        //transform.GetComponent<Rigidbody2D>().velocity = (mousePos - position).normalized * speed;
-        //transform.Translate((transform.forward * speed * Time.deltaTime));
+        transform.position += transform.right * speed * Time.deltaTime; // use transform right since unity rotation starts North, our angle starts East
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {

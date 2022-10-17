@@ -58,7 +58,7 @@ public class BattleScene : MonoBehaviour
             //Every
             if ((((int)numSeconds % waveSpawnInterval == 0) || ((int)numSeconds == 0)) && (waveCalledLast != (int)numSeconds))
             {
-                Debug.Log("Spawned!");
+                //Debug.Log("Spawned!");
                 spawnEnemy(numToSpawn);
                 waveCalledLast = (int)numSeconds;
             }
@@ -89,7 +89,7 @@ public class BattleScene : MonoBehaviour
                         spawnPos = new Vector3(target.transform.position[0] + maxShift, target.transform.position[1] + yShift, 0);
                         break;
                 }
-                Debug.Log("Spawned!");
+                //Debug.Log("Spawned!");
                 Instantiate(basicEnemyFab, spawnPos, Quaternion.identity);
             }
     }
