@@ -11,7 +11,7 @@ public class Player : Entity
 {
     private Item[] inventory;
     private static Item[] stash;
-    private bool isImmune = false;
+    private bool isImmune = false, isAttacking = false;
     private float immunityTime = 1f, timer = 0f;
     private List<Enemy> enemiesWithin = new List<Enemy> ();
 
@@ -46,10 +46,10 @@ public class Player : Entity
             Camera.main.transform.position = transform.position + new Vector3(0, 1, -5); // make camera follow player
             Immunity();
             TakeDamage();
-            if (Input.GetButtonDown("Fire1"))
-            {
-                Attack();
-            }
+
+            if (Input.GetButtonDown("Fire1")) { isAttacking = true; }
+            if (isAttacking) { Attack(); }
+            if (Input.GetButtonUp("Fire1")) { isAttacking = false; }
         }
     }
 

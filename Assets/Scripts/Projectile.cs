@@ -11,16 +11,16 @@ public class Projectile : MonoBehaviour
 {
     private float speed;
     private float lifetime;
-    private GameObject gun;
+    private Gun gun;
     private float angle;
     
     private Vector3 mousePos = new Vector3();
     private Vector3 firePos = new Vector3();
 
     private void Awake() {
-        gun = GameObject.Find("Gun");
-        speed = gun.GetComponent<Gun>().getSpeed();
-        lifetime = gun.GetComponent<Gun>().getLifetime();
+        gun = GameObject.Find("Gun").GetComponent<Gun>();
+        speed = gun.getSpeed();
+        lifetime = gun.getLifetime();
 
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         firePos = transform.position;
@@ -41,7 +41,10 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.CompareTag("enemy")) {
-            collision.gameObject.GetComponent<Enemy>().setHp(0);
+            var enemy = collision.gameObject.GetComponent<Enemy>();
+            enemy.setHp(enemy.getHp() - gun.getDamage());
+
+            Destroy(gameObject);
         }
     }
 }
