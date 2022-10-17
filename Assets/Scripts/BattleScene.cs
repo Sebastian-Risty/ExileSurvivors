@@ -1,5 +1,5 @@
 //***********************************************************************
-//COPYRIGHT Sebastian Ritsy, Bradley Johnson, Matthew Dutton
+//COPYRIGHT: Team ??????
 //***********************************************************************
 
 using System.Collections;

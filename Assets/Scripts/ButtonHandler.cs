@@ -1,3 +1,7 @@
+//***********************************************************************
+//COPYRIGHT: Team ??????
+//***********************************************************************
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
