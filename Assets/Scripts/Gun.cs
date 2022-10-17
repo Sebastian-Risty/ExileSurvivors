@@ -12,7 +12,7 @@ using static UnityEngine.GraphicsBuffer;
 public class Gun : Weapon
 {
     private float speed = 15f; // put common stuff into item class
-    private float size = 1f;
+    private float size = 0.15f; // prefab default is 0.3f
     private float damage = 10f;
 
     private int numShots = 5; // number of attacks to fire (cannot be even)
@@ -72,8 +72,12 @@ public class Gun : Weapon
             newBullet.tag = "playerAttack";
             // add damage variable
             newBullet.GetComponent<PlayerAttack>().setDamage(damage);
-            // fire center
+            // fire center angle
             newBullet.transform.Rotate(new Vector3(0, 0, fireAngle));
+
+            // update bullet size
+            newBullet.transform.localScale = new Vector3(size, size, 0);
+
             // add bullet to list to update their info
             bullets.Add(newBullet);
             // destroy the bullet after a certain period
@@ -95,6 +99,9 @@ public class Gun : Weapon
 
                     newLeftBullet.transform.Rotate(new Vector3(0, 0, fireAngle - (spreadAngle * i)));
                     newRightBullet.transform.Rotate(new Vector3(0, 0, fireAngle + (spreadAngle * i)));
+
+                    newLeftBullet.transform.localScale = new Vector3(size, size, 0);
+                    newRightBullet.transform.localScale = new Vector3(size, size, 0);
 
                     bullets.Add(newLeftBullet);
                     bullets.Add(newRightBullet);
