@@ -16,18 +16,23 @@ public class BattleScene : MonoBehaviour
     public GameObject basicEnemyFab; // store enemy fabs as list?
 
     private GameObject target;
+    private Canvas pauseMenu;
 
     private int waveCalledLast; //Last second interval that a wave was spawned
     private float numSeconds; //num seconds in level
     private uint waveSpawnInterval; //A wave will spawn every these number of seconds
     private uint numToSpawn; //determines how many enemies will be spawned
 
-    public static bool pause = false;
+    public static bool pause;
 
     // Start is called before the first frame update
     void Start()
     {
         target = GameObject.Find("Player");
+        pauseMenu = GameObject.Find("Pause Menu Canvas").GetComponent<Canvas>();
+        pauseMenu.enabled = false; // hide by default
+        pause = false;
+
         enemyList = new List<Enemy>();
         numSeconds = 0;
         waveCalledLast = 2; //set to non zero to prevent massove first wave
@@ -43,8 +48,9 @@ public class BattleScene : MonoBehaviour
         if(Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp(KeyCode.Tab))
         {
             pause = !pause;
-            pauseGame();
         }
+
+        pauseHandler();
 
         if (!pause)
         {
@@ -88,15 +94,17 @@ public class BattleScene : MonoBehaviour
             }
     }
 
-    void pauseGame()
+    void pauseHandler()
     {
         if (pause)
         {
             Time.timeScale = 0f;
+            pauseMenu.enabled = true;
         }
         else
         {
             Time.timeScale = 1;
+            pauseMenu.enabled = false;
         }
     }
  }

@@ -1,6 +1,3 @@
-using JetBrains.Annotations;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,8 +8,9 @@ public class ButtonHandler : MonoBehaviour
     public buttonFunction function;
 
     public enum buttonFunction{
-        start,
-        test
+        startBattle,
+        returnToMain,
+        resumeBattle
     }
 
     private void Awake()
@@ -25,11 +23,14 @@ public class ButtonHandler : MonoBehaviour
     {
         switch (function)
         {
-            case buttonFunction.start:
+            case buttonFunction.startBattle:
                 SceneManager.LoadScene("Battle");
                 break;
-            case buttonFunction.test:
-                Debug.Log("Hit!");
+            case buttonFunction.returnToMain:
+                SceneManager.LoadScene("Main Menu");
+                break;
+            case buttonFunction.resumeBattle:
+                BattleScene.pause = false;
                 break;
         }
     }
